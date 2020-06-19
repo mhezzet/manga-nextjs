@@ -6,6 +6,8 @@ import styles from "./index.module.css";
 export default function Home({ manga }) {
   const { push } = useRouter();
 
+  console.log("length", manga.filter((manga) => manga.im).length);
+
   return (
     <main className={styles.page}>
       <section className={styles.search}>
@@ -20,9 +22,11 @@ export default function Home({ manga }) {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {manga.map((manga) => (
-            <Select.Option value={manga.i}>{manga.t}</Select.Option>
-          ))}
+          {manga
+            .filter((manga) => manga.im)
+            .map((manga) => (
+              <Select.Option value={manga.i}>{manga.t}</Select.Option>
+            ))}
         </Select>
       </section>
     </main>

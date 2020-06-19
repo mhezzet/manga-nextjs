@@ -10,6 +10,8 @@ export default function Manga({ manga }) {
     query: { id },
   } = useRouter();
 
+  console.log("manga", manga.title);
+
   return (
     <div className="container">
       <Head>
@@ -73,9 +75,11 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const { data } = await Axios.get("https://www.mangaeden.com/api/list/0");
 
-  const paths = data.manga.map((manga) => ({
-    params: { id: manga.i },
-  }));
+  const paths = data.manga
+    .filter((manga) => manga.im)
+    .map((manga) => ({
+      params: { id: manga.i },
+    }));
 
   return { paths, fallback: false };
 }
